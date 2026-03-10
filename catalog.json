@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Mutual Non-Disclosure Agreement",
+    "description": "A standard mutual NDA created by a committee of over 40 attorneys. Allows each party to disclose confidential information for the purpose of evaluating whether to enter into a business relationship. Free to use and modify under CC BY 4.0.",
+    "filename": "Mutual-NDA.md"
+  },
+  {
+    "name": "Mutual Non-Disclosure Agreement Cover Page",
+    "description": "The cover page template to accompany the Mutual NDA Standard Terms. Captures the effective date, MNDA term, confidentiality period, governing law, jurisdiction, and signature blocks for both parties.",
+    "filename": "Mutual-NDA-coverpage.md"
+  },
+  {
+    "name": "Cloud Service Agreement",
+    "description": "A standard agreement for selling and buying cloud software and SaaS products. Covers service access, restrictions, privacy, payment, term and termination, warranties, liability, indemnification, and confidentiality. Free to use and modify under CC BY 4.0.",
+    "filename": "CSA.md"
+  },
+  {
+    "name": "Service Level Agreement",
+    "description": "A standard SLA designed to be used alongside the Cloud Service Agreement (CSA). Defines target uptime, response time commitments, service credits, and remedies for performance failures. Free to use and modify under CC BY 4.0.",
+    "filename": "sla.md"
+  },
+  {
+    "name": "Design Partner Agreement",
+    "description": "A standard agreement for early product access where a partner tests the product and provides feedback to help the provider build and improve it. Covers program participation, feedback ownership, confidentiality, and IP rights. Free to use and modify under CC BY 4.0.",
+    "filename": "design-partner-agreement.md"
+  },
+  {
+    "name": "Professional Services Agreement",
+    "description": "A standard agreement for professional and consulting services engagements. Covers service delivery, deliverables ownership, IP, payment, confidentiality, indemnification, and insurance. Free to use and modify under CC BY 4.0.",
+    "filename": "psa.md"
+  },
+  {
+    "name": "Data Processing Agreement",
+    "description": "A standard DPA for use when a provider processes personal data on behalf of a customer. Covers processor/subprocessor relationships, GDPR-compliant data transfer mechanisms (EEA SCCs, UK Addendum), security incident response, and deletion obligations. Free to use and modify under CC BY 4.0.",
+    "filename": "DPA.md"
+  },
+  {
+    "name": "Partnership Agreement",
+    "description": "A standard agreement for business partnerships between two companies. Covers mutual obligations, trademark licensing, payment, privacy, escalation procedures, confidentiality, and indemnification. Free to use and modify under CC BY 4.0.",
+    "filename": "Partnership-Agreement.md"
+  },
+  {
+    "name": "Software License Agreement",
+    "description": "A standard agreement for licensing on-premise or downloadable software. Covers software license grants, restrictions, updates, open source, payment, warranties, liability, indemnification, and confidentiality. Free to use and modify under CC BY 4.0.",
+    "filename": "Software-License-Agreement.md"
+  },
+  {
+    "name": "Pilot Agreement",
+    "description": "A standard short-term agreement allowing a prospective customer to trial a product or service before committing to a longer-term deal. Covers pilot access, evaluation purposes, restrictions, confidentiality, and limited liability. Free to use and modify under CC BY 4.0.",
+    "filename": "Pilot-Agreement.md"
+  },
+  {
+    "name": "Business Associate Agreement",
+    "description": "A standard HIPAA-compliant BAA for use when a provider handles protected health information (PHI) on behalf of a covered entity. Covers PHI obligations, safeguards, subcontractors, breach notification, and data deletion. Free to use and modify under CC BY 4.0.",
+    "filename": "BAA.md"
+  },
+  {
+    "name": "AI Addendum",
+    "description": "A standard addendum for agreements involving AI-powered products or services. Covers permitted AI service use, model training restrictions, IP ownership of inputs and outputs, and disclaimers about AI-generated content. Free to use and modify under CC BY 4.0.",
+    "filename": "AI-Addendum.md"
+  }
+]
