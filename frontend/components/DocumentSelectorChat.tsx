@@ -39,7 +39,7 @@ export default function DocumentSelectorChat() {
   }
 
   return (
-    <div className="flex h-screen bg-slate-100">
+    <div className="flex h-full bg-slate-100">
       {/* Left panel — chat */}
       <div className="w-[480px] shrink-0 flex flex-col overflow-hidden">
         <ChatPanel

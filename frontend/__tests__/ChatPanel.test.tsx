@@ -65,7 +65,7 @@ describe("ChatPanel", () => {
 
   it("shows Thinking indicator when loading", () => {
     render(<ChatPanel {...defaultProps} isLoading={true} />);
-    expect(screen.getByText("Thinking...")).toBeTruthy();
+    expect(screen.getByText("Thinking")).toBeTruthy();
   });
 
   it("disables input when loading", () => {

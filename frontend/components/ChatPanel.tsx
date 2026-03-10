@@ -68,8 +68,13 @@ export default function ChatPanel({
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-400">
-              Thinking...
+            <div className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-400 flex items-center gap-1">
+              <span>Thinking</span>
+              <span className="inline-flex gap-0.5">
+                <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              </span>
             </div>
           </div>
         )}
@@ -87,7 +92,7 @@ export default function ChatPanel({
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
           disabled={isLoading}
-          className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-md bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:opacity-50"
+          className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-md bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#209dd7] focus:border-transparent transition disabled:opacity-50"
         />
         <button
           type="submit"

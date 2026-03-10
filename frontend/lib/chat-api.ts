@@ -21,6 +21,7 @@ export async function sendChat(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages }),
+    credentials: "include",
   });
   if (!res.ok) {
     throw new Error(`Chat request failed: ${res.status}`);
@@ -35,6 +36,7 @@ export async function sendSelectChat(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages }),
+    credentials: "include",
   });
   if (!res.ok) {
     throw new Error(`Select request failed: ${res.status}`);

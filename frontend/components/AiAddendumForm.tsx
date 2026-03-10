@@ -49,7 +49,7 @@ export default function AiAddendumForm({ data, onChange, onDownload }: Props) {
                     value={value}
                     checked={data.modelTraining === value}
                     onChange={() => onChange("modelTraining", value)}
-                    className="text-blue-600 focus:ring-blue-500"
+                    className="text-[#209dd7] focus:ring-[#209dd7]"
                   />
                   <span className="text-sm text-slate-700">{uiLabel}</span>
                 </label>
@@ -154,7 +154,7 @@ export default function AiAddendumForm({ data, onChange, onDownload }: Props) {
       <div className="px-6 py-4 bg-white border-t border-slate-200 shrink-0">
         <button
           onClick={onDownload}
-          className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold py-2.5 px-4 rounded-md transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full bg-[#753991] hover:bg-[#612d79] active:bg-[#512570] text-white text-sm font-semibold py-2.5 px-4 rounded-md transition focus:outline-none focus:ring-2 focus:ring-[#209dd7] focus:ring-offset-2"
         >
           Download as PDF
         </button>
