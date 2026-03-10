@@ -5,64 +5,12 @@ import {
   MNDA_TERM_LABELS,
   TOC_LABELS,
 } from "@/lib/nda-fields";
+import { inputClass, textareaClass, legendClass, Section, Field } from "@/lib/form-helpers";
 
 interface Props {
   data: NdaFormData;
-  // Generic onChange preserves union type narrowing for fields like mndaTerm
   onChange: <K extends keyof NdaFormData>(field: K, value: NdaFormData[K]) => void;
   onDownload: () => void;
-}
-
-// ─── Shared styles ────────────────────────────────────────────────────────────
-
-const inputClass =
-  "w-full px-3 py-2 text-sm border border-slate-200 rounded-md bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition";
-
-const textareaClass = `${inputClass} resize-none`;
-
-const legendClass =
-  "block text-xs font-medium text-slate-600 mb-1";
-
-// ─── Layout helpers ───────────────────────────────────────────────────────────
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="mb-6">
-      <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3 pb-1 border-b border-slate-200">
-        {title}
-      </h3>
-      <div className="space-y-3">{children}</div>
-    </div>
-  );
-}
-
-/** A labelled field that properly associates the label with its input via htmlFor. */
-function Field({
-  label,
-  htmlFor,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label
-        htmlFor={htmlFor}
-        className="block text-xs font-medium text-slate-600 mb-1"
-      >
-        {label}
-      </label>
-      {children}
-    </div>
-  );
 }
 
 // ─── Party field configuration ────────────────────────────────────────────────

@@ -1,11 +1,12 @@
 """Tests for the chat endpoint and AI service."""
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 from fastapi.testclient import TestClient
 
-from app.ai_service import NdaExtraction, extraction_to_field_dict
+from app.ai_service import extraction_to_field_dict
+from app.documents.nda import NdaExtraction
 from app.main import app
 
 client = TestClient(app)
@@ -60,7 +61,7 @@ def test_extraction_to_field_dict_all_fields():
 # --- Integration tests for POST /api/chat/nda ---
 
 
-@patch("app.routers.chat.extract_nda_fields")
+@patch("app.routers.chat.extract_fields")
 def test_chat_nda_returns_reply_and_fields(mock_extract):
     mock_extract.return_value = NdaExtraction(
         reply="I see you mentioned Acme.",
@@ -76,7 +77,7 @@ def test_chat_nda_returns_reply_and_fields(mock_extract):
     assert data["fields"] == {"party1Company": "Acme Inc."}
 
 
-@patch("app.routers.chat.extract_nda_fields")
+@patch("app.routers.chat.extract_fields")
 def test_chat_nda_no_fields_extracted(mock_extract):
     mock_extract.return_value = NdaExtraction(reply="Could you tell me more?")
     resp = client.post(
@@ -102,7 +103,7 @@ def test_chat_nda_invalid_role():
     assert resp.status_code == 422
 
 
-@patch("app.routers.chat.extract_nda_fields")
+@patch("app.routers.chat.extract_fields")
 def test_chat_nda_llm_error_returns_502(mock_extract):
     mock_extract.side_effect = RuntimeError("LLM unavailable")
     resp = client.post(
@@ -110,3 +111,11 @@ def test_chat_nda_llm_error_returns_502(mock_extract):
         json={"messages": [{"role": "user", "content": "Hello"}]},
     )
     assert resp.status_code == 502
+
+
+def test_chat_unknown_doc_type_returns_422():
+    resp = client.post(
+        "/api/chat/unknown-type",
+        json={"messages": [{"role": "user", "content": "Hello"}]},
+    )
+    assert resp.status_code == 422

@@ -2,23 +2,35 @@
 
 import { useState } from "react";
 import ChatPanel from "@/components/ChatPanel";
-import NdaForm from "@/components/NdaForm";
-import NdaPreview from "@/components/NdaPreview";
 import { sendChat, ChatMessage } from "@/lib/chat-api";
-import { defaultFormData, NdaFormData } from "@/lib/nda-fields";
+
+interface Props {
+  docType: string;
+  docName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  defaultFormData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  FormComponent: React.ComponentType<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  PreviewComponent: React.ComponentType<any>;
+}
 
 type Tab = "chat" | "form";
 
-export default function NdaCreator() {
-  const [formData, setFormData] = useState<NdaFormData>(defaultFormData);
-  const [activeTab, setActiveTab] = useState<Tab>("form");
+export default function DocCreator({
+  docType,
+  docName,
+  defaultFormData,
+  FormComponent,
+  PreviewComponent,
+}: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [formData, setFormData] = useState<Record<string, any>>(defaultFormData);
+  const [activeTab, setActiveTab] = useState<Tab>("chat");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleChange<K extends keyof NdaFormData>(
-    field: K,
-    value: NdaFormData[K]
-  ) {
+  function handleChange(field: string, value: unknown) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -28,7 +40,7 @@ export default function NdaCreator() {
     setMessages(updated);
     setIsLoading(true);
     try {
-      const { reply, fields } = await sendChat("nda", updated);
+      const { reply, fields } = await sendChat(docType, updated);
       setFormData((prev) => ({ ...prev, ...fields }));
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
@@ -70,11 +82,11 @@ export default function NdaCreator() {
               messages={messages}
               isLoading={isLoading}
               onSend={handleSend}
-              subtitle="Describe your NDA and I'll fill in the fields"
-              emptyHint="Tell me about the NDA you need — who are the parties, what jurisdiction, etc."
+              subtitle={`Describe your ${docName} and I'll fill in the fields`}
+              emptyHint={`Tell me about the ${docName} you need.`}
             />
           ) : (
-            <NdaForm
+            <FormComponent
               data={formData}
               onChange={handleChange}
               onDownload={() => window.print()}
@@ -83,10 +95,10 @@ export default function NdaCreator() {
         </div>
       </div>
 
-      {/* Right panel — NDA preview */}
+      {/* Right panel — document preview */}
       <div className="flex-1 overflow-y-auto bg-slate-100 print:overflow-visible print:bg-white print:block print:h-auto">
         <div className="max-w-3xl mx-auto my-6 shadow-sm rounded-lg overflow-hidden print:shadow-none print:rounded-none print:my-0 print:max-w-none print:overflow-visible">
-          <NdaPreview data={formData} />
+          <PreviewComponent data={formData} />
         </div>
       </div>
     </div>
