@@ -8,7 +8,7 @@ The available documents are covered in the catalog.json file in the project root
 
 @catalog.json
 
-Before we start: the initial implementation is a frontend-only prototype that only supports the Mutual NDA document with no AI chat.
+The AI chat is implemented for the Mutual NDA document.
 
 ## Development process
 
@@ -30,7 +30,7 @@ The entire project should be packaged into a Docker container.
 The backend should be in backend/ and be a uv project, using FastAPI.  
 The frontend should be in frontend/  
 The database should use SQLLite and be created from scratch each time the Docker container is brought up, allowing for a users table with sign up and sign in.  
-Consider statically building the frontend and serving it via FastAPI, if that will work.  
+The frontend is statically exported (`output: 'export'` in next.config.ts) and served via FastAPI.
 There should be scripts in scripts/ for:  
 ```bash
 # Mac
@@ -53,3 +53,30 @@ Backend available at http://localhost:8000
 - Purple Secondary: `#753991` (submit buttons)
 - Dark Navy: `#032147` (headings)
 - Gray Text: `#888888`
+
+## Current implementation status
+
+### PL-3: Mutual NDA creator (Done)
+- Form-based NDA creator at `/nda` with live preview and PDF download via `window.print()`
+- Side-by-side layout: form (left), NDA document preview (right)
+- Covers all Mutual NDA cover page fields (parties, dates, terms, governing law)
+- 38 unit tests (Vitest + happy-dom) and 14 E2E tests (Playwright)
+
+### PL-4: V1 foundation (Done)
+- FastAPI backend in `backend/` with SQLite database and User model
+- Placeholder auth endpoints: `POST /api/auth/login`, `POST /api/auth/signup`
+- Health check: `GET /api/health`
+- Fake login screen at `/` (navigates to `/nda` on submit, no real auth)
+- Multi-stage Dockerfile (Node frontend build + Python runtime), single container
+- Start/stop scripts for Mac, Linux, Windows in `scripts/`
+- Everything served on port 8000
+
+### PL-5: AI Chat for Mutual NDA (Done)
+- AI chat panel in left sidebar with tabbed UI (AI Chat / Form tabs)
+- Backend `POST /api/chat/nda` endpoint using LiteLLM via OpenRouter with Cerebras
+- Structured Outputs (`NdaExtraction` Pydantic model) for single-call field extraction + reply
+- Real-time NDA preview updates as AI extracts fields from conversation
+- Form tab still accessible for manual edits after AI populates fields
+- `ai_service.py` handles LLM calls, `routers/chat.py` handles HTTP boundary
+- 8 backend tests (pytest), 11 new frontend unit tests (Vitest), 14 E2E tests unchanged
+- Start scripts pass `.env` to Docker container via `--env-file`
