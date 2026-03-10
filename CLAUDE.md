@@ -8,7 +8,7 @@ The available documents are covered in the catalog.json file in the project root
 
 @catalog.json
 
-The AI chat is implemented for the Mutual NDA document.
+AI chat is implemented for all 11 document types. After login, users land on `/chat` where the AI helps them select a document type, then guides them through filling in the fields.
 
 ## Development process
 
@@ -71,23 +71,20 @@ Backend available at http://localhost:8000
 - Start/stop scripts for Mac, Linux, Windows in `scripts/`
 - Everything served on port 8000
 
-### PL-5: AI Chat for Mutual NDA (Done)
-- AI chat panel in left sidebar with tabbed UI (AI Chat / Form tabs)
-- Backend `POST /api/chat/nda` endpoint using LiteLLM via OpenRouter with Cerebras
-- Structured Outputs (`NdaExtraction` Pydantic model) for single-call field extraction + reply
-- Real-time NDA preview updates as AI extracts fields from conversation
-- Form tab still accessible for manual edits after AI populates fields
-- `ai_service.py` handles LLM calls, `routers/chat.py` handles HTTP boundary
-- 8 backend tests (pytest), 11 new frontend unit tests (Vitest), 14 E2E tests unchanged
+### PL-5: AI Chat for Mutual NDA (Done, superseded by PL-6)
+- Originally built NDA-specific AI chat; now generalized into PL-6's generic architecture
 - Start scripts pass `.env` to Docker container via `--env-file`
 
 ### PL-6: Expand to all supported legal document types (Done)
 - AI-first document selection: `/chat` page with `POST /api/chat/select` endpoint
 - Document catalog sidebar showing all 11 document types with direct navigation
 - Generic `DocCreator` component reused across all document types (AI Chat + Form + Preview)
+- Generic `ChatPanel` component (extracted from NDA-specific `NdaChat`)
+- Shared `form-helpers.tsx` for consistent form styling across all document types
 - Generic `POST /api/chat/{doc_type}` endpoint with document registry dispatch
-- `documents/` package: per-document Pydantic extraction models and system prompts for all 11 types
+- `backend/app/documents/` package: per-document Pydantic extraction models and system prompts
+- Generic `ai_service.py` with `extract_fields()` and `extraction_to_field_dict()`
 - Handcrafted JSX previews and manual form tabs for each document type
 - Unsupported document handling: AI suggests closest available alternative
-- Supported documents: Mutual NDA, CSA, SLA, Design Partner, PSA, DPA, Partnership, Software License, Pilot, BAA, AI Addendum
+- Per-document routes: `/nda`, `/csa`, `/sla`, `/design-partner`, `/psa`, `/dpa`, `/partnership`, `/software-license`, `/pilot`, `/baa`, `/ai-addendum`
 - 15 backend tests (pytest), 65 frontend unit tests (Vitest)
