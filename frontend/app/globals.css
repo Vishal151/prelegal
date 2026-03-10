@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Print styles — reset layout constraints so all pages render */
+@media print {
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+
+  /* Reset the flex/height/overflow layout so content flows naturally */
+  body,
+  body > div,
+  body > div > div {
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* NDA document content */
+  #nda-document {
+    padding: 0 !important;
+    font-size: 11pt;
+    line-height: 1.6;
+  }
+
+  #nda-document a {
+    color: #000;
+    text-decoration: underline;
+  }
+}
