@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen bg-white overflow-hidden">
+    <div className="flex h-screen bg-white overflow-hidden print:block print:h-auto print:overflow-visible">
       {/* Left panel — form (hidden on print) */}
       <div className="w-96 shrink-0 flex flex-col overflow-hidden print:hidden">
         <NdaForm
@@ -27,9 +27,9 @@ export default function Home() {
         />
       </div>
 
-      {/* Right panel — NDA preview (scrollable on screen, full-width on print) */}
-      <div className="flex-1 overflow-y-auto bg-slate-100 print:overflow-visible print:bg-white">
-        <div className="max-w-3xl mx-auto my-6 shadow-sm rounded-lg overflow-hidden print:shadow-none print:rounded-none print:my-0 print:max-w-none">
+      {/* Right panel — NDA preview */}
+      <div className="flex-1 overflow-y-auto bg-slate-100 print:overflow-visible print:bg-white print:block print:h-auto">
+        <div className="max-w-3xl mx-auto my-6 shadow-sm rounded-lg overflow-hidden print:shadow-none print:rounded-none print:my-0 print:max-w-none print:overflow-visible">
           <NdaPreview data={formData} />
         </div>
       </div>

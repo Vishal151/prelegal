@@ -10,27 +10,37 @@ body {
   color: var(--foreground);
 }
 
-/* Print styles — show only the NDA document */
+/* Print styles — reset layout constraints so all pages render */
 @media print {
   @page {
     margin: 2cm;
     size: A4;
   }
 
-  body {
-    font-size: 11pt;
-    color: #000;
-    background: #fff;
+  /* Reset the flex/height/overflow layout so content flows naturally */
+  body,
+  body > div,
+  body > div > div {
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
-  /* Make the preview fill the page */
+  /* NDA document content */
   #nda-document {
     padding: 0 !important;
     font-size: 11pt;
     line-height: 1.6;
   }
 
-  /* Hide placeholder dashes in print — show blank underline */
   #nda-document a {
     color: #000;
     text-decoration: underline;
