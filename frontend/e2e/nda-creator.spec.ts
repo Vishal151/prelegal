@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("NDA Creator", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/nda");
   });
 
   test.describe("layout", () => {

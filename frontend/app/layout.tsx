@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mutual NDA Creator — Prelegal",
-  description: "Create and download a Mutual Non-Disclosure Agreement",
+  title: "Prelegal",
+  description: "Draft legal agreements from templates",
 };
 
 export default function RootLayout({
