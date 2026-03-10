@@ -38,3 +38,15 @@ export const defaultFormData: NdaFormData = {
   party2Address: "",
   party2Date: "",
 };
+
+/** Legal document text for MNDA Term (used in NDA body). */
+export const MNDA_TERM_LABELS: Record<NdaFormData["mndaTerm"], string> = {
+  "1year": "1 year from the Effective Date",
+  indefinite: "indefinite, until terminated by either party",
+};
+
+/** Legal document text for Term of Confidentiality (used in NDA body). */
+export const TOC_LABELS: Record<NdaFormData["termOfConfidentiality"], string> = {
+  "1year": "1 year from the Effective Date",
+  perpetual: "perpetual",
+};

@@ -1,6 +1,10 @@
 "use client";
 
-import { NdaFormData } from "@/lib/nda-fields";
+import {
+  NdaFormData,
+  MNDA_TERM_LABELS,
+  TOC_LABELS,
+} from "@/lib/nda-fields";
 
 interface Props {
   data: NdaFormData;
@@ -18,20 +22,15 @@ function F({ value, label }: { value: string; label: string }) {
   );
 }
 
-function mndaTermLabel(term: NdaFormData["mndaTerm"]) {
-  return term === "1year"
-    ? "1 year from the Effective Date"
-    : "indefinite, until terminated by either party";
-}
-
-function tocLabel(toc: NdaFormData["termOfConfidentiality"]) {
-  return toc === "1year" ? "1 year from the Effective Date" : "perpetual";
-}
-
+/**
+ * Parse a bare YYYY-MM-DD date string without timezone ambiguity.
+ * Using `new Date(year, month-1, day)` creates a local-time Date,
+ * avoiding the UTC-midnight shift that `new Date("YYYY-MM-DD")` causes.
+ */
 function formatDate(dateStr: string) {
   if (!dateStr) return "";
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -39,8 +38,10 @@ function formatDate(dateStr: string) {
 }
 
 export default function NdaPreview({ data }: Props) {
-  const p1 = data.party1Company || data.party1Name;
-  const p2 = data.party2Company || data.party2Name;
+  // Use company name only for the legal body text — person names belong in the
+  // signature block, not the operative "identified on the Cover Page" sentence.
+  const p1 = data.party1Company;
+  const p2 = data.party2Company;
 
   return (
     <div
@@ -76,10 +77,10 @@ export default function NdaPreview({ data }: Props) {
               <F value={data.purpose} label="Purpose" />
             </CoverRow>
             <CoverRow label="MNDA Term">
-              <span className="font-semibold">{mndaTermLabel(data.mndaTerm)}</span>
+              <span className="font-semibold">{MNDA_TERM_LABELS[data.mndaTerm]}</span>
             </CoverRow>
             <CoverRow label="Term of Confidentiality">
-              <span className="font-semibold">{tocLabel(data.termOfConfidentiality)}</span>
+              <span className="font-semibold">{TOC_LABELS[data.termOfConfidentiality]}</span>
             </CoverRow>
             <CoverRow label="Governing Law">
               <span>
@@ -194,12 +195,12 @@ export default function NdaPreview({ data }: Props) {
           <strong>5. Term and Termination.</strong> This MNDA commences on the{" "}
           <F value={formatDate(data.effectiveDate)} label="Effective Date" /> and
           expires at the end of the{" "}
-          <span className="font-semibold">{mndaTermLabel(data.mndaTerm)}</span>.
+          <span className="font-semibold">{MNDA_TERM_LABELS[data.mndaTerm]}</span>.
           Either party may terminate this MNDA for any or no reason upon written
           notice to the other party. The Receiving Party&apos;s obligations
           relating to Confidential Information will survive for{" "}
           <span className="font-semibold">
-            {tocLabel(data.termOfConfidentiality)}
+            {TOC_LABELS[data.termOfConfidentiality]}
           </span>
           , despite any expiration or termination of this MNDA.
         </p>
