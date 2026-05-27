@@ -6,9 +6,17 @@ from app.documents.registry import get_registry
 def test_registry_has_all_doc_types():
     registry = get_registry()
     expected = [
-        "nda", "csa", "sla", "design-partner", "psa",
-        "dpa", "partnership", "software-license", "pilot",
-        "baa", "ai-addendum",
+        "nda",
+        "csa",
+        "sla",
+        "design-partner",
+        "psa",
+        "dpa",
+        "partnership",
+        "software-license",
+        "pilot",
+        "baa",
+        "ai-addendum",
     ]
     assert set(registry.keys()) == set(expected)
 

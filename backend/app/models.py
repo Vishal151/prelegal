@@ -13,7 +13,9 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     name: Mapped[str] = mapped_column(String(255), default="")
     password_hash: Mapped[str] = mapped_column(String(255))
-    created_at: Mapped[datetime] = mapped_column(default=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(
+        default=lambda: datetime.now(timezone.utc)
+    )
 
 
 class SavedDocument(Base):
@@ -24,7 +26,9 @@ class SavedDocument(Base):
     doc_type: Mapped[str] = mapped_column(String(50))
     fields_json: Mapped[str] = mapped_column(Text, default="{}")
     chat_json: Mapped[str] = mapped_column(Text, default="[]")
-    created_at: Mapped[datetime] = mapped_column(default=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(
+        default=lambda: datetime.now(timezone.utc)
+    )
     updated_at: Mapped[datetime] = mapped_column(
         default=lambda: datetime.now(timezone.utc),
     )

@@ -4,7 +4,6 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-
 SYSTEM_PROMPT = """\
 You are a legal assistant helping a user fill out a Design Partner Agreement.
 
