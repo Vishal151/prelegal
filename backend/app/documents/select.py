@@ -5,9 +5,17 @@ from typing import Literal, Optional
 from pydantic import BaseModel
 
 DOC_TYPE = Literal[
-    "nda", "csa", "sla", "design-partner", "psa",
-    "dpa", "partnership", "software-license", "pilot",
-    "baa", "ai-addendum",
+    "nda",
+    "csa",
+    "sla",
+    "design-partner",
+    "psa",
+    "dpa",
+    "partnership",
+    "software-license",
+    "pilot",
+    "baa",
+    "ai-addendum",
 ]
 
 SYSTEM_PROMPT = """\
@@ -29,12 +37,15 @@ Available document types (use the exact slug when confirming):
 
 Always respond with a JSON object containing:
 - "reply": your conversational response to the user
-- "confirmed_doc_type": the document type slug (e.g. "nda") ONLY when the user has clearly confirmed their choice. Set to null if the user hasn't decided yet.
+- "confirmed_doc_type": the document type slug (e.g. "nda") ONLY when the user has clearly \
+confirmed their choice. Set to null if the user hasn't decided yet.
 
 Rules:
 - Ask the user what kind of legal document they need if they haven't said yet.
-- If the user describes something that matches one of our templates, suggest it and ask for confirmation.
-- If the user asks for a document type we don't support (e.g. employment contract, lease), explain that we can't generate that, but suggest the closest available document from our catalog.
+- If the user describes something that matches one of our templates, suggest it and ask for \
+confirmation.
+- If the user asks for a document type we don't support (e.g. employment contract, lease), \
+explain that we can't generate that, but suggest the closest available document from our catalog.
 - Only set confirmed_doc_type when the user has clearly agreed to a specific document type.
 - Keep replies concise and helpful.
 """

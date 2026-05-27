@@ -2,7 +2,6 @@
 
 from unittest.mock import patch
 
-import pytest
 from fastapi.testclient import TestClient
 
 from app.ai_service import extraction_to_field_dict

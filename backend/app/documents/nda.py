@@ -4,7 +4,6 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel
 
-
 SYSTEM_PROMPT = """\
 You are a legal assistant helping a user fill out a Mutual Non-Disclosure Agreement.
 
@@ -15,7 +14,8 @@ Always respond with a JSON object containing:
 - Field values for any NDA fields you can confidently extract from the conversation
 
 The NDA fields are:
-- purpose: the purpose of sharing confidential information (default: "Evaluating whether to enter into a business relationship with the other party.")
+- purpose: the purpose of sharing confidential information (default: "Evaluating whether to enter \
+into a business relationship with the other party.")
 - effectiveDate: date in YYYY-MM-DD format
 - mndaTerm: exactly "1year" or "indefinite"
 - termOfConfidentiality: exactly "1year" or "perpetual"
