@@ -34,9 +34,9 @@ class SelectResponse(BaseModel):
     confirmed_doc_type: str | None
 
 
-@router.post("/select", response_model=SelectResponse)
+@router.post("/select", response_model=SelectResponse, summary="Select document type")
 def chat_select(body: ChatRequest):
-    """Help user choose a document type from the catalog."""
+    """Identify which document type the user wants from a freeform conversation."""
     messages = [m.model_dump() for m in body.messages]
     try:
         extraction = extract_fields(SELECT_PROMPT, SelectionExtraction, messages)
@@ -49,13 +49,17 @@ def chat_select(body: ChatRequest):
     )
 
 
-@router.post("/{doc_type}", response_model=ChatResponse)
+@router.post(
+    "/{doc_type}", response_model=ChatResponse, summary="Extract document fields"
+)
 def chat_extract(doc_type: str, body: ChatRequest):
-    """Process chat messages and extract fields for a specific document type."""
+    """Extract form fields for a specific document type from the conversation."""
     registry = get_registry()
     definition = registry.get(doc_type)
     if not definition:
-        raise HTTPException(status_code=422, detail=f"Unknown document type: {doc_type}")
+        raise HTTPException(
+            status_code=422, detail=f"Unknown document type: {doc_type}"
+        )
 
     messages = [m.model_dump() for m in body.messages]
     try:

@@ -45,12 +45,12 @@ def _to_response(doc: SavedDocument) -> DocumentResponse:
     )
 
 
-@router.get("", response_model=list[DocumentListItem])
+@router.get("", response_model=list[DocumentListItem], summary="List documents")
 def list_documents(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """List all saved documents for the current user."""
+    """List all saved documents for the current user, ordered by most recently updated."""
     docs = (
         db.query(SavedDocument)
         .filter(SavedDocument.user_id == user.id)
@@ -58,21 +58,25 @@ def list_documents(
         .all()
     )
     return [
-        DocumentListItem(id=d.id, doc_type=d.doc_type, updated_at=d.updated_at.isoformat())
+        DocumentListItem(
+            id=d.id, doc_type=d.doc_type, updated_at=d.updated_at.isoformat()
+        )
         for d in docs
     ]
 
 
-@router.post("", response_model=DocumentResponse)
+@router.post("", response_model=DocumentResponse, summary="Save document")
 def save_document(
     body: SaveDocumentRequest,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Save or update a document. Upserts by (user_id, doc_type)."""
+    """Save or update a document. Upserts by (user_id, doc_type) — one saved doc per type per user."""
     doc = (
         db.query(SavedDocument)
-        .filter(SavedDocument.user_id == user.id, SavedDocument.doc_type == body.doc_type)
+        .filter(
+            SavedDocument.user_id == user.id, SavedDocument.doc_type == body.doc_type
+        )
         .first()
     )
     fields_json = json.dumps(body.fields)
@@ -97,7 +101,7 @@ def save_document(
     return _to_response(doc)
 
 
-@router.get("/{doc_type}", response_model=DocumentResponse)
+@router.get("/{doc_type}", response_model=DocumentResponse, summary="Load document")
 def load_document(
     doc_type: str,
     user: User = Depends(get_current_user),
@@ -114,13 +118,13 @@ def load_document(
     return _to_response(doc)
 
 
-@router.delete("/{document_id}")
+@router.delete("/{document_id}", summary="Delete document")
 def delete_document(
     document_id: int,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Delete a saved document."""
+    """Delete a saved document by ID."""
     doc = db.get(SavedDocument, document_id)
     if not doc or doc.user_id != user.id:
         raise HTTPException(status_code=404, detail="Not found")

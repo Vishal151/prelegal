@@ -48,9 +48,9 @@ def _set_session_cookie(response: Response, user: User) -> None:
     )
 
 
-@router.post("/signup", response_model=UserResponse)
+@router.post("/signup", response_model=UserResponse, summary="Create a new account")
 def signup(body: SignupRequest, response: Response, db: Session = Depends(get_db)):
-    """Create a new user account."""
+    """Create a new user account and set a session cookie."""
     existing = db.query(User).filter(User.email == body.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -66,9 +66,9 @@ def signup(body: SignupRequest, response: Response, db: Session = Depends(get_db
     return UserResponse(id=user.id, email=user.email, name=user.name)
 
 
-@router.post("/login", response_model=UserResponse)
+@router.post("/login", response_model=UserResponse, summary="Sign in")
 def login(body: LoginRequest, response: Response, db: Session = Depends(get_db)):
-    """Authenticate and set session cookie."""
+    """Authenticate and set a 30-day session cookie."""
     user = db.query(User).filter(User.email == body.email).first()
     if not user or not verify_password(body.password, user.password_hash):
         raise HTTPException(status_code=400, detail="Invalid email or password")
@@ -76,16 +76,18 @@ def login(body: LoginRequest, response: Response, db: Session = Depends(get_db))
     return UserResponse(id=user.id, email=user.email, name=user.name)
 
 
-@router.post("/logout")
+@router.post("/logout", summary="Sign out")
 def logout(response: Response):
     """Clear the session cookie."""
     response.delete_cookie(key=COOKIE_NAME, path="/")
     return {"message": "Logged out"}
 
 
-@router.get("/me", response_model=MeResponse)
+@router.get("/me", response_model=MeResponse, summary="Current user")
 def me(user: User | None = Depends(get_optional_user)):
-    """Return the current user or null."""
+    """Return the authenticated user or null if not logged in."""
     if user:
-        return MeResponse(user=UserResponse(id=user.id, email=user.email, name=user.name))
+        return MeResponse(
+            user=UserResponse(id=user.id, email=user.email, name=user.name)
+        )
     return MeResponse(user=None)
