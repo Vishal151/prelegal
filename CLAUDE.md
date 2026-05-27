@@ -88,3 +88,11 @@ Backend available at http://localhost:8000
 - Unsupported document handling: AI suggests closest available alternative
 - Per-document routes: `/nda`, `/csa`, `/sla`, `/design-partner`, `/psa`, `/dpa`, `/partnership`, `/software-license`, `/pilot`, `/baa`, `/ai-addendum`
 - 15 backend tests (pytest), 65 frontend unit tests (Vitest)
+
+### PL-7: Multi-user auth, document persistence, and UI polish (Done)
+- Real JWT authentication replacing the fake login: `POST /api/auth/signup`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`
+- HTTPOnly session cookie (30-day TTL), bcrypt password hashing, JWT via python-jose
+- Document persistence: `POST /api/documents`, `GET /api/documents`, `GET /api/documents/{doc_type}`, `DELETE /api/documents/{id}`
+- SQLAlchemy `SavedDocument` model (user_id, doc_type, fields_json, chat_json, updated_at)
+- Sidebar shows saved documents with per-document resume from last chat state
+- UI polish: nav header with user info and logout, consistent colour scheme across all pages
