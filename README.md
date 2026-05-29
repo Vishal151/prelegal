@@ -8,6 +8,18 @@ Prelegal lets users describe what they need in plain English; an AI assistant gu
 
 Built as a portfolio project demonstrating AI-integrated backend engineering, multi-user SaaS architecture, and single-container deployment.
 
+## Demo
+
+![Prelegal demo](docs/demo.gif)
+
+| Login | Document selection |
+|---|---|
+| ![Login](docs/screenshots/01-login.png) | ![Chat](docs/screenshots/03-chat-select.png) |
+
+| AI-filled NDA | Form view |
+|---|---|
+| ![NDA filled](docs/screenshots/07-nda-filled.png) | ![Form](docs/screenshots/08-nda-form.png) |
+
 ## Architecture
 
 ```
